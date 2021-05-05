@@ -9,7 +9,7 @@ import { LoggerService } from './../logger/logger.service';
 export class PubService {
     constructor(
         private _configService: ConfigService,
-        private logger: LoggerService
+        private _loggerService: LoggerService
         ) {
             const buffer = Buffer.from(this.credentials, 'base64');
             const credentialDecode = buffer ? buffer.toString() : null;
@@ -30,9 +30,9 @@ export class PubService {
 
     async publisher(data: any){
         const dataBuffer = Buffer.from(JSON.stringify(data));
-        const messageid = await this.pubSubClient.topic(this.topicName).publish(dataBuffer);
+        const messageId = await this.pubSubClient.topic(this.topicName).publish(dataBuffer);
 
-        console.log(messageid);
-        return true;
+        this._loggerService.customInfo({}, { [`Message Published PUB/SUB to ${this.topicName}`]: messageId });
+        return `Message Published ${messageId}`
     }
 }

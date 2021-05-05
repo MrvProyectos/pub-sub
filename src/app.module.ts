@@ -1,16 +1,17 @@
 import { HttpModule, Module } from '@nestjs/common';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
-import { PubModule } from './modules/pub/pub.module';
 // Config
 import { Configuration } from './config/config.keys';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 
+import { AppController } from './app.controller';
+import { PubService } from './modules/pub/pub.service';
+import { LoggerService } from './modules/logger/logger.service';
+
 @Module({
-  imports: [HttpModule, PubModule, ConfigModule],
-  controllers: [],
-  providers: [],
+  imports: [HttpModule, ConfigModule],
+  controllers: [AppController],
+  providers: [PubService, LoggerService],
 })
 export class AppModule {
   static port: number | string;
