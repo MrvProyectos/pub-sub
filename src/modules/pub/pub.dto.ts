@@ -1,9 +1,31 @@
-import { IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty, IsEnum, IsNumber, IsArray } from 'class-validator';
 
 export class PubDto {
-    @IsNotEmpty()
-    clave: string;
+  @IsNumber()
+  @IsNotEmpty()
+  id: number;
 
-    @IsNotEmpty()
-    valor: string;
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  price: number;
+
+  @IsString()
+  @IsNotEmpty()
+  commercialName: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  photoUrls: [];
+
+  @IsString()
+  @IsNotEmpty()
+  status: string;
 }

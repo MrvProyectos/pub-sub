@@ -1,19 +1,17 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-
-import { Logger } from '@nestjs/common'; // consultar
+import { Logger, ValidationPipe } from '@nestjs/common'; // consultar
+import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 
 async function bootstrap() {
-
-  const logger = new Logger();
   const app = await NestFactory.create(AppModule);
-
+  const logger = new Logger();
+  const { httpAdapter } = app.get(HttpAdapterHost); // Consultar
+ 
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
   app.setGlobalPrefix('apips');
-  await app.listen(3000);
-
-  const port = process.env.PORT;
-
-  logger.log(`prueba logger ${port}`);
+  await app.listen(AppModule.port);
 }
 bootstrap();
