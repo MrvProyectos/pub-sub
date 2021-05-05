@@ -1,6 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { PubService } from './modules/pub/pub.service';
 import { PubDto } from './modules/dto/dto.pubdto';
+import { LogDTO } from './modules/dto/log.dto';
+
+import { PubService } from './modules/pub/pub.service';
 import { LoggerService } from './modules/logger/logger.service';
 
 @Controller('pub')
@@ -20,4 +22,20 @@ export class AppController {
             statusDescription: result
         };
     }
+
+    @Post('logme')
+    @HttpCode(HttpStatus.OK)
+    async logMe(@Body() body: LogDTO) {
+      const logFrom = `Log from ${body.logFrom}`;
+      if (body.logType === 'info') {
+        this._loggerService.customInfo({}, { [logFrom]: body.logResult });
+      } else {
+        this._loggerService.customError({}, { [logFrom]: body.logResult });
+      }
+      return {
+        status: HttpStatus.OK,
+        statusDescription: 'LOG OK'
+      };
+    }
+  
 }
