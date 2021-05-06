@@ -29,10 +29,15 @@ export class PubService {
     private pubSubClient: PubSub;
 
     async publisher(data: any){
-        const dataBuffer = Buffer.from(JSON.stringify(data));
-        const messageId = await this.pubSubClient.topic(this.topicName).publish(dataBuffer);
 
-        this._loggerService.customInfo({}, { [`Message Published PUB/SUB to ${this.topicName}`]: messageId });
-        return `Message Published ${messageId}`
+        try{
+            const dataBuffer = Buffer.from(JSON.stringify(data));
+            const messageId = await this.pubSubClient.topic(this.topicName).publish(dataBuffer);
+    
+            this._loggerService.customInfo({}, { [`Message Published PUB/SUB to ${this.topicName}`]: messageId });
+            return `Message Published ${messageId}`
+        } catch (error) {
+            this._loggerService.customError({}, {[`Message Error PUB/SUB to ${this.topicName}`]: error.message });
+        }
     }
 }
