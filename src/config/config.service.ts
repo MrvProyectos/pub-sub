@@ -5,7 +5,7 @@ export class ConfigService {
     private readonly envConfig: {[key: string]: string};
 
     constructor(){
-        const envFilePath = __dirname + '/../../.env';
+        const envFilePath = __dirname + './../../.env';
         const existsPath = fs.existsSync(envFilePath);
 
         if(!existsPath){

@@ -10,7 +10,7 @@ export class AppController {
     constructor(
         private _pubService: PubService,
         private _loggerService: LoggerService
-    ) {}
+    ){}
 
     @Post('propagator')
     @HttpCode(HttpStatus.OK)

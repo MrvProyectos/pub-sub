@@ -3,6 +3,8 @@ import * as moment from 'moment-timezone';
 import * as log from "npmlog";
 import * as circularJSON from "circular-json";
 
+require('dotenv').config();
+
 @Injectable()
 export class LoggerService {
 

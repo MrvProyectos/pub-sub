@@ -33,7 +33,7 @@ export class PubService {
         try{
             const dataBuffer = Buffer.from(JSON.stringify(data));
             const messageId = await this.pubSubClient.topic(this.topicName).publish(dataBuffer);
-    
+
             this._loggerService.customInfo({}, { [`Message Published PUB/SUB to ${this.topicName}`]: messageId });
             return `Message Published ${messageId}`
         } catch (error) {
